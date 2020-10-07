@@ -7,12 +7,12 @@ pub struct SplitMix64 {
 
 impl PrngAlgorithm for SplitMix64 {
     fn next(&mut self) -> u64 {
-        self.state += Wrapping::<u64>(0x9E3779B97F4A7C15);
+        self.state += Wrapping::<u64>(0x9E37_79B9_7F4A_7C15);
 
         let mut z = self.state;
 
-        z = (z ^ (z >> 30)) * Wrapping::<u64>(0xBF58476D1CE4E5B9);
-        z = (z ^ (z >> 27)) * Wrapping::<u64>(0x94D049BB133111EB);
+        z = (z ^ (z >> 30)) * Wrapping::<u64>(0xBF58_476D_1CE4_E5B9);
+        z = (z ^ (z >> 27)) * Wrapping::<u64>(0x94D0_49BB_1331_11EB);
         (z ^ (z >> 32)).0
     }
 }
@@ -165,15 +165,27 @@ mod tests {
         };
 
         let mut prng = Prng::<SplitMix64>::new(seed);
+        let mut bounds = (false, false);
 
         for a in 0..1000 {
             for b in 1..1000 {
                 let max = a * b + b;
                 let r = prng.range::<u64>(a, max);
 
+                if r == a {
+                    bounds.0 = true;
+                }
+
+                if r == max {
+                    bounds.1 = true;
+                }
+
                 assert!(r >= a);
                 assert!(r <= max);
             }
         }
+
+        assert!(bounds.0 == true);
+        assert!(bounds.1 == true);
     }
 }

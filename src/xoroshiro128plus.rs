@@ -180,15 +180,27 @@ mod tests {
         };
 
         let mut prng = Prng::<XoRoShiRo128Plus>::new(seed);
+        let mut bounds = (false, false);
 
         for a in 0..1000 {
             for b in 1..1000 {
                 let max = a * b + b;
                 let r = prng.range::<u64>(a, max);
 
+                if r == a {
+                    bounds.0 = true;
+                }
+
+                if r == max {
+                    bounds.1 = true;
+                }
+
                 assert!(r >= a);
                 assert!(r <= max);
             }
         }
+
+        assert!(bounds.0 == true);
+        assert!(bounds.1 == true);
     }
 }

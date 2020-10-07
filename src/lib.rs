@@ -7,16 +7,16 @@ pub mod xorshift128plus;
 use prng_traits::{PrngAlgorithm, PrngGeneration, PrngSeeding};
 
 pub trait Randomizable {
-    fn generate(algorithm: &mut PrngAlgorithm) -> Self;
-    fn random_range(minimum: Self, maximum: Self, algorithm: &mut PrngAlgorithm) -> Self;
+    fn generate(algorithm: &mut dyn PrngAlgorithm) -> Self;
+    fn random_range(minimum: Self, maximum: Self, algorithm: &mut dyn PrngAlgorithm) -> Self;
 }
 
 impl Randomizable for u8 {
-    fn generate(prng: &mut PrngAlgorithm) -> Self {
+    fn generate(prng: &mut dyn PrngAlgorithm) -> Self {
         prng.next() as u8
     }
 
-    fn random_range(minimum: Self, maximum: Self, prng: &mut PrngAlgorithm) -> Self {
+    fn random_range(minimum: Self, maximum: Self, prng: &mut dyn PrngAlgorithm) -> Self {
         let diff = maximum.wrapping_sub(minimum) as f32 + 0.5;
         let min = minimum as f32;
 
@@ -25,11 +25,11 @@ impl Randomizable for u8 {
 }
 
 impl Randomizable for u16 {
-    fn generate(prng: &mut PrngAlgorithm) -> Self {
+    fn generate(prng: &mut dyn PrngAlgorithm) -> Self {
         prng.next() as u16
     }
 
-    fn random_range(minimum: Self, maximum: Self, prng: &mut PrngAlgorithm) -> Self {
+    fn random_range(minimum: Self, maximum: Self, prng: &mut dyn PrngAlgorithm) -> Self {
         let diff = maximum.wrapping_sub(minimum) as f32 + 0.5;
         let min = minimum as f32;
 
@@ -38,11 +38,11 @@ impl Randomizable for u16 {
 }
 
 impl Randomizable for u32 {
-    fn generate(prng: &mut PrngAlgorithm) -> Self {
+    fn generate(prng: &mut dyn PrngAlgorithm) -> Self {
         prng.next() as u32
     }
 
-    fn random_range(minimum: Self, maximum: Self, prng: &mut PrngAlgorithm) -> Self {
+    fn random_range(minimum: Self, maximum: Self, prng: &mut dyn PrngAlgorithm) -> Self {
         let diff = maximum.wrapping_sub(minimum) as f32 + 0.5;
         let min = minimum as f32;
 
@@ -51,11 +51,11 @@ impl Randomizable for u32 {
 }
 
 impl Randomizable for u64 {
-    fn generate(prng: &mut PrngAlgorithm) -> Self {
+    fn generate(prng: &mut dyn PrngAlgorithm) -> Self {
         prng.next()
     }
 
-    fn random_range(minimum: Self, maximum: Self, prng: &mut PrngAlgorithm) -> Self {
+    fn random_range(minimum: Self, maximum: Self, prng: &mut dyn PrngAlgorithm) -> Self {
         let diff = maximum.wrapping_sub(minimum) as f32 + 0.5;
         let min = minimum as f32;
 
@@ -64,11 +64,11 @@ impl Randomizable for u64 {
 }
 
 impl Randomizable for usize {
-    fn generate(prng: &mut PrngAlgorithm) -> Self {
+    fn generate(prng: &mut dyn PrngAlgorithm) -> Self {
         prng.next() as usize
     }
 
-    fn random_range(minimum: Self, maximum: Self, prng: &mut PrngAlgorithm) -> Self {
+    fn random_range(minimum: Self, maximum: Self, prng: &mut dyn PrngAlgorithm) -> Self {
         let diff = maximum.wrapping_sub(minimum) as f32 + 0.5;
         let min = minimum as f32;
 
@@ -77,11 +77,11 @@ impl Randomizable for usize {
 }
 
 impl Randomizable for i8 {
-    fn generate(prng: &mut PrngAlgorithm) -> Self {
+    fn generate(prng: &mut dyn PrngAlgorithm) -> Self {
         prng.next() as i8
     }
 
-    fn random_range(minimum: Self, maximum: Self, prng: &mut PrngAlgorithm) -> Self {
+    fn random_range(minimum: Self, maximum: Self, prng: &mut dyn PrngAlgorithm) -> Self {
         let diff = maximum.wrapping_sub(minimum) as f32 + 0.5;
         let min = minimum as f32;
 
@@ -90,11 +90,11 @@ impl Randomizable for i8 {
 }
 
 impl Randomizable for i16 {
-    fn generate(prng: &mut PrngAlgorithm) -> Self {
+    fn generate(prng: &mut dyn PrngAlgorithm) -> Self {
         prng.next() as i16
     }
 
-    fn random_range(minimum: Self, maximum: Self, prng: &mut PrngAlgorithm) -> Self {
+    fn random_range(minimum: Self, maximum: Self, prng: &mut dyn PrngAlgorithm) -> Self {
         let diff = maximum.wrapping_sub(minimum) as f32 + 0.5;
         let min = minimum as f32;
 
@@ -103,11 +103,11 @@ impl Randomizable for i16 {
 }
 
 impl Randomizable for i32 {
-    fn generate(prng: &mut PrngAlgorithm) -> Self {
+    fn generate(prng: &mut dyn PrngAlgorithm) -> Self {
         prng.next() as i32
     }
 
-    fn random_range(minimum: Self, maximum: Self, prng: &mut PrngAlgorithm) -> Self {
+    fn random_range(minimum: Self, maximum: Self, prng: &mut dyn PrngAlgorithm) -> Self {
         let diff = maximum.wrapping_sub(minimum) as f32 - 0.5;
         let min = minimum as f32;
 
@@ -116,11 +116,11 @@ impl Randomizable for i32 {
 }
 
 impl Randomizable for i64 {
-    fn generate(prng: &mut PrngAlgorithm) -> Self {
+    fn generate(prng: &mut dyn PrngAlgorithm) -> Self {
         prng.next() as i64
     }
 
-    fn random_range(minimum: Self, maximum: Self, prng: &mut PrngAlgorithm) -> Self {
+    fn random_range(minimum: Self, maximum: Self, prng: &mut dyn PrngAlgorithm) -> Self {
         let diff = maximum.wrapping_sub(minimum) as f32 + 0.5;
         let min = minimum as f32;
 
@@ -129,11 +129,11 @@ impl Randomizable for i64 {
 }
 
 impl Randomizable for isize {
-    fn generate(prng: &mut PrngAlgorithm) -> Self {
+    fn generate(prng: &mut dyn PrngAlgorithm) -> Self {
         prng.next() as isize
     }
 
-    fn random_range(minimum: Self, maximum: Self, prng: &mut PrngAlgorithm) -> Self {
+    fn random_range(minimum: Self, maximum: Self, prng: &mut dyn PrngAlgorithm) -> Self {
         let diff = maximum.wrapping_sub(minimum) as f32 + 0.5;
         let min = minimum as f32;
 
@@ -142,11 +142,11 @@ impl Randomizable for isize {
 }
 
 impl Randomizable for f32 {
-    fn generate(prng: &mut PrngAlgorithm) -> Self {
+    fn generate(prng: &mut dyn PrngAlgorithm) -> Self {
         std::f32::MAX * (prng.random_factor() - prng.random_factor())
     }
 
-    fn random_range(minimum: Self, maximum: Self, prng: &mut PrngAlgorithm) -> Self {
+    fn random_range(minimum: Self, maximum: Self, prng: &mut dyn PrngAlgorithm) -> Self {
         let diff = (maximum - minimum) as f32;
         let min = minimum as f32;
 
@@ -155,11 +155,11 @@ impl Randomizable for f32 {
 }
 
 impl Randomizable for f64 {
-    fn generate(prng: &mut PrngAlgorithm) -> Self {
+    fn generate(prng: &mut dyn PrngAlgorithm) -> Self {
         std::f64::MAX * (prng.random_factor() - prng.random_factor()) as f64
     }
 
-    fn random_range(minimum: Self, maximum: Self, prng: &mut PrngAlgorithm) -> Self {
+    fn random_range(minimum: Self, maximum: Self, prng: &mut dyn PrngAlgorithm) -> Self {
         let diff = (maximum - minimum) as f32;
         let min = minimum as f32;
 
